@@ -30,10 +30,14 @@ export class ServersComponent implements OnInit {
       this.servers.push(this.serverName);
       
   		this.serverCreationStatus = 'Server was created! Name is ' + this.serverName;
- 	}
+ 		}
 
   	onUpdateServerName(event: Event){
   		this.serverName = (<HTMLInputElement>event.target).value;
+  	}
+
+  	onRemoveServer(id: number){
+  		this.servers.splice(id, 1);
   	}
 
 }
