@@ -22,7 +22,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 			);
 	}
 
-	ngOnDestroy(){
+	ngOnDestroy() {
 		this.subscription.unsubscribe();
 	}
 
