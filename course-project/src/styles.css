@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-form .ng-touched.ng-invalid{
+input.ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid
+{
   border: 1px solid red;
 }
