@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { RecipeService } from '../recipes/recipe.service';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Component ({
 	selector: 'app-header',
@@ -8,19 +7,22 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-	constructor(private recipeService: RecipeService,
-              private slService: ShoppingListService) {
-	}
+	constructor(private dataStorageService: DataStorageService) {}
 
 	onSaveData() {
-	  this.recipeService.saveRecipes().subscribe(
+	  this.dataStorageService.storeRecipes().subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
+	  this.dataStorageService.storeShoppingList().subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     );
   }
 
   onFetchData() {
-	  this.recipeService.fetchRecipes();
+	  this.dataStorageService.fetchRecipes();
+	  this.dataStorageService.fetchShoppingList();
   }
 
 }

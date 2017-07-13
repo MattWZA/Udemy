@@ -20,6 +20,7 @@ import { RecipeService } from './recipes/recipe.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
+import { DataStorageService } from './shared/data-storage.service';
 
 
 @NgModule({
@@ -41,9 +42,9 @@ import { HttpModule } from '@angular/http';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
   ],
-  providers: [ShoppingListService, RecipeService],
+  providers: [ShoppingListService, RecipeService, DataStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
