@@ -3,6 +3,9 @@ import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs/Subject';
+import { Http, Response } from '@angular/http';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RecipeService {
@@ -27,7 +30,8 @@ export class RecipeService {
 			])
 	];
 
-	constructor(private slService: ShoppingListService) {}
+	constructor(private slService: ShoppingListService,
+              private http: Http) {}
 
 	getRecipes() {
 		return this.recipes.slice();
@@ -54,6 +58,26 @@ export class RecipeService {
   deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
+  }
+
+  fetchRecipes() {
+	  return this.http.get('https://ng-recipe-book-b38e0.firebaseio.com/recipes.json')
+      .map(
+        (response: Response) => {
+          this.recipes = response.json();
+          return this.recipes;
+        }
+      )
+      .catch(
+        (error: Response) => {
+          console.log(error);
+          return Observable.throw('Error getting recipes');
+        }
+      );
+  }
+
+  saveRecipes() {
+	  return this.http.put('https://ng-recipe-book-b38e0.firebaseio.com/recipes.json', this.recipes);
   }
 
 }
