@@ -11,5 +11,8 @@
       </div>
       <button class="btn btn-primary" type="submit">Sign Up</button>
     </form>
+    <p></p>
+    <div class="alert alert-info" *ngIf="msg">{{msg}}</div>
+    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
   </div>
 </div>

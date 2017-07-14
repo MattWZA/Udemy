@@ -5,23 +5,30 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from './ingredient.model';
 import 'rxjs/Rx';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class DataStorageService {
   constructor(private http: Http,
               private recipeService: RecipeService,
-              private slService: ShoppingListService) {}
+              private slService: ShoppingListService,
+              private authService: AuthService
+  ) {}
 
   storeRecipes() {
-    return this.http.put('https://ng-recipe-book-b38e0.firebaseio.com/recipes.json', this.recipeService.getRecipes());
+    const token = this.authService.getToken();
+    return this.http.put('https://ng-recipe-book-b38e0.firebaseio.com/recipes.json?auth=' + token, this.recipeService.getRecipes());
   }
 
   storeShoppingList() {
-    return this.http.put('https://ng-recipe-book-b38e0.firebaseio.com/shoppingList.json', this.slService.getIngredients());
+    const token = this.authService.getToken();
+    return this.http.put('https://ng-recipe-book-b38e0.firebaseio.com/shoppingList.json?auth=' + token, this.slService.getIngredients());
   }
 
   fetchRecipes() {
-    this.http.get('https://ng-recipe-book-b38e0.firebaseio.com/recipes.json')
+    const token = this.authService.getToken();
+
+    this.http.get('https://ng-recipe-book-b38e0.firebaseio.com/recipes.json?auth=' + token)
       .map(
         (response: Response) => {
           const recipes: Recipe[] = response.json();
@@ -41,7 +48,8 @@ export class DataStorageService {
   }
 
   fetchShoppingList() {
-    this.http.get('https://ng-recipe-book-b38e0.firebaseio.com/shoppingList.json')
+    const token = this.authService.getToken();
+    this.http.get('https://ng-recipe-book-b38e0.firebaseio.com/shoppingList.json?auth=' + token)
       .subscribe(
         (response: Response) => {
           const ingredients: Ingredient[] = response.json();
