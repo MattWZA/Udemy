@@ -3,22 +3,23 @@ import { Router } from '@angular/router';
 import { Injectable, OnInit } from '@angular/core';
 
 @Injectable()
-export class AuthService implements OnInit{
+export class AuthService {
   token: string;
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    firebase.auth().onAuthStateChanged(
-      (user) => {
-        if (user) {
-          this.getToken();
-        } else {
-          this.token = null;
-        }
-      }
-    );
-  }
+  // ngOnInit() {
+  //   firebase.auth().onAuthStateChanged(
+  //     (user) => {
+  //       console.log('onAuthStateChanged', user);
+  //       if (user) {
+  //         this.getToken();
+  //       } else {
+  //         this.token = null;
+  //       }
+  //     }
+  //   );
+  // }
 
   signupUser(email: string, password: string) {
     return firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -43,7 +44,7 @@ export class AuthService implements OnInit{
   logout() {
     firebase.auth().signOut().then(
       () => {
-        this.router.navigate(['./signin']);
+        this.router.navigate(['./auth', 'signin']);
       }
     );
   }

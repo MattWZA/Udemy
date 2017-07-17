@@ -16,5 +16,15 @@ export class AppComponent implements OnInit {
       apiKey: 'AIzaSyDoPUOaVjI6pEbDCi3B8B5S50To5KaPypo',
       authDomain: 'ng-recipe-book-b38e0.firebaseapp.com'
     })
+
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.authService.getToken();
+        } else {
+          this.authService.token = null;
+        }
+      }
+    );
   }
 }
